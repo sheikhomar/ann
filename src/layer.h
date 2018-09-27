@@ -18,9 +18,10 @@ typedef struct {
 void Layer_ctor(
         Layer *const self,
         char *const name,
-        float *const weights,
-        unsigned int numNeurons,
         unsigned int inputSize,
+        Neuron *const neurons,
+        unsigned int numNeurons,
+        float *const outputArray,
         enum Activation activation);
 
 void Layer_compute(Layer *const self, Input *const input);

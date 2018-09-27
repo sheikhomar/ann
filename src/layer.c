@@ -9,14 +9,16 @@
 void Layer_ctor(
         Layer *const self,
         char *const name,
-        float *const weights,
-        unsigned int numNeurons,
         unsigned int inputSize,
+        Neuron *const neurons,
+        unsigned int numNeurons,
+        float *const outputArray,
         enum Activation activation) {
 
   assertNotNull(self, "Layer is a NULL pointer.");
   assertNotNull(name, "Name is a NULL pointer.");
-  assertNotNull(weights, "Weights is a NULL porinter.");
+  assertNotNull(neurons, "Neurons cannot be a NULL porinter.");
+  assertNotNull(outputArray, "OutputArray cannot be a NULL porinter.");
   assertTrue(numNeurons > 0, "Number of neurons must be larger than zero.");
   assertTrue(inputSize > 0, "Input size must be larger than zero.");
   assertTrue(activation == Activation_ReLU || activation == Activation_SoftMax,
@@ -26,20 +28,8 @@ void Layer_ctor(
   self->numNeurons = numNeurons;
   self->inputSize = inputSize;
   self->activation = activation;
-
-  /* Allocate memory for output value for each neuron */
-  self->output = (float *)malloc(self->numNeurons * sizeof(float));
-
-  /* Allocate memory for neurons */
-  self->neurons = (Neuron*)malloc(self->numNeurons * sizeof(Neuron));
-
-  unsigned int i;
-  for (i = 0; i < self->numNeurons; ++i) {
-    Neuron *neuron = &(self->neurons[i]);
-    float *neuronWeights = weights + (i* (self->inputSize+1));
-    Neuron_ctor(neuron, neuronWeights, self->inputSize+1, activation);
-  }
-
+  self->output = outputArray;
+  self->neurons = neurons;
   self->__initialised = true;
 }
 
