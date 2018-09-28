@@ -24,6 +24,20 @@ void Layer_ctor(
   assertTrue(activation == Activation_ReLU || activation == Activation_SoftMax,
              "Unknown activation function.");
 
+  Neuron *firstNeuron = &(neurons[0]);
+  assertTrue(firstNeuron->activation == activation, "Neuron activation does not match layer activation.");
+
+  unsigned int i;
+  for (i = 0; i < numNeurons; ++i) {
+    assertEquals(0, outputArray[i], "Output array must be initialised with zeros.");
+
+    if (i != 0) {
+      Neuron *neuron = &(neurons[i]);
+      assertEquals(firstNeuron->size, neuron->size, "Neuron size mismatch.");
+      assertEquals(firstNeuron->activation, neuron->activation, "Neuron activation mismatch.");
+    }
+  }
+
   self->name = name;
   self->numNeurons = numNeurons;
   self->inputSize = inputSize;
@@ -54,12 +68,4 @@ void Layer_compute(Layer *const self, Input *const input) {
     for (i = 0; i < self->numNeurons; ++i)
       self->output[i] = exp(self->output[i]) / sumOfExp;
   }
-}
-
-void Layer_dtor(Layer *const self) {
-  assertNotNull(self, "Layer cannot be a NULL pointer.");
-  assertTrue(self->__initialised, "Layer must be initialised.");
-
-  free(self->neurons);
-  free(self->output);
 }

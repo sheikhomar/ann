@@ -26,6 +26,4 @@ void Layer_ctor(
 
 void Layer_compute(Layer *const self, Input *const input);
 
-void Layer_dtor(Layer *const self);
-
 #endif //ANN_LAYER_H
