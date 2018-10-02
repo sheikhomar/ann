@@ -17,8 +17,8 @@ void Layer_ctor(
 
   assertNotNull(self, "Layer is a NULL pointer.");
   assertNotNull(name, "Name is a NULL pointer.");
-  assertNotNull(neurons, "Neurons cannot be a NULL porinter.");
-  assertNotNull(outputArray, "OutputArray cannot be a NULL porinter.");
+  assertNotNull(neurons, "Neurons cannot be a NULL pointer.");
+  assertNotNull(outputArray, "OutputArray cannot be a NULL pointer.");
   assertTrue(numNeurons > 0, "Number of neurons must be larger than zero.");
   assertTrue(inputSize > 0, "Input size must be larger than zero.");
   assertTrue(activation == Activation_ReLU || activation == Activation_SoftMax,
